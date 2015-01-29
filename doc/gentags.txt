@@ -1,0 +1,77 @@
+*gentags.txt* tags file generator
+
+
+CONTENTS						*gentags-contents*
+
+INTRODUCTION						|gentags-introduction|
+INTERFACE						|gentags-interface|
+  VARIABLES						|gentags-variables|
+  COMMANDS						|gentags-commands|
+  FUNCTIONS						|gentags-functions|
+
+
+==============================================================================
+INTRODUCTION						*gentags-introduction*
+
+generate tags file and set 'tags'.
+- async by using |vimproc|.
+- customizable.
+
+similar work
+- https://github.com/szw/vim-tags
+
+==============================================================================
+INTERFACE						*gentags-interface*
+
+------------------------------------------------------------------------------
+VARIABLES						*gentags-variables*
+							*g:gentags#config*
+
+You can define the settings by |g:gentags#config|.  |g:gentags#config| is a
+|Dictionary| whose key is 'filetype'.  The special filetype '_' gives default
+values for all filetype.  The values of |g:gentags#config| are Dictionaries
+which contain the following items.
+
+	"ctags"			Default: "ctags"
+		the command name
+	"tags"			Default: "tags"
+		the tags file name
+	"dirs"			Default: [".git"]
+		the default generate directories list.
+	"cmdopt"		Default: "-R --sort=yes --tag-relative"
+		command option
+	"filetype"		Default: 0
+		ctags --languages
+	"auto_ctags"		Default: 0
+		if non zero value, |gentags| will generate tags on file
+		saving.
+	"auto_settags"		Default: 1
+		if non zero value, |gentags| sets "tags" when file reading.
+
+Example: >
+	let g:gentags#config = {
+	\ '-': {'auto_ctags': 0, 'auto_settags': 0},
+	\ 'c': {'auto_ctags': 1, 'auto_settags': 1, 'filetype': 1},
+	\}
+<
+
+------------------------------------------------------------------------------
+COMMANDS						*gentags-commands*
+
+								*:GenTags*
+:GenTags
+	generate tags file.
+
+------------------------------------------------------------------------------
+FUNCTIONS						*gentags-functions*
+
+							*gentags#ctags()*
+gentags#ctags([{dir}])			*gentags#ctags()*
+	A function version of |:GenTags|.
+
+							*gentags#settags()*
+gentags#settags()			*gentags#settags()*
+	set 'tags'.
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

@@ -98,6 +98,10 @@ function! gentags#ctags(...) abort " {{{
   endtry
 endfunction " }}}
 
+function! gentags#settags() abort " {{{
+  execute printf('setlocal tags+=%s', s:get_path())
+endfunction " }}}
+
 function! gentags#test() abort " {{{
   return s:get_path()
 endfunction " }}}

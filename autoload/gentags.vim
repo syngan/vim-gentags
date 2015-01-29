@@ -12,7 +12,16 @@ let s:defval.filetype = 0
 " }}}
 
 function! s:get(name) abort " {{{
-  return get(g:, 'gentags#' . a:name, s:defval[a:name])
+  if !exists('g:gentags#config') || type(g:gentags#config) != type({})
+    return s:defval[a:name]
+  endif
+  if has_key(g:gentags#config, &filetype) && has_key(g:gentags#config[&filetype], a:name)
+    return g:gentags#config[&filetype][a:name]
+  elseif has_key(g:gentags#config, '_')
+    return get(g:gentags#config['_'], a:name, s:defval[a:name])
+  else
+    return s:defval[a:name]
+  endif
 endfunction " }}}
 
 function! s:get_path() abort " {{{

@@ -18,21 +18,22 @@ endfunction " }}}
 function! s:get_path() abort " {{{
   " search `tags` file or '.git' dir upwards.
   let dd = ''
+  let fdir = expand('%:p:h')
   for dir in s:get('dirs')
-    let dd = finddir(dir, '.;')
+    let dd = finddir(dir, fdir . ';')
     if dd !=# ''
       let dd = fnamemodify(dd, ':p:h')
       break
     endif
   endfor
 
-  let df = findfile(s:get('tags'), '.;')
+  let df = findfile(s:get('tags'), fdir . ';')
   if df !=# ''
     let df = fnamemodify(df, ':p:h')
   endif
 
   if dd ==# '' && df ==# ''
-    return fnamemodify('.', ':p')
+    return fdir
   elseif dd ==# ''
     return df
   elseif df ==# ''

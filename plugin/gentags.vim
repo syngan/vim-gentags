@@ -12,6 +12,12 @@ set cpo&vim
 command! -nargs=*
 \ GenTags call gentags#ctags(<f-args>)
 
+augroup augrp__gentags
+  autocmd!
+  autocmd BufWritePost * :call gentags#auto_ctags()
+  autocmd BufReadPost  * :call gentags#auto_settags()
+augroup END
+
 let g:loaded_gentags = 1
 
 let &cpo = s:save_cpo

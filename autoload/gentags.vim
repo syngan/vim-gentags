@@ -4,6 +4,9 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:defval = {} " {{{
+let s:defval.auto_ctags = 0
+let s:defval.auto_settags = 1
+let s:defval.quiet = 0
 let s:defval.tags = 'tags'
 let s:defval.ctags = 'ctags'
 let s:defval.dirs = ['.git']
@@ -100,7 +103,9 @@ function! gentags#ctags(...) abort " {{{
   let save_dir = getcwd()
   try
     execute printf('lcd %s', dir)
-    echo s:throwmsg(printf('do `%s` at `%s`', cmd, dir))
+    if !s:get('quiet')
+      echo s:throwmsg(printf('do `%s` at `%s`', cmd, dir))
+    endif
     call s:system(cmd, s:cmdopt(dir))
   finally
     execute printf('lcd %s', save_dir)
@@ -114,6 +119,17 @@ function! gentags#settags() abort " {{{
   endif
 endfunction " }}}
 
+function! gentags#auto_ctags(...) abort " {{{
+  if s:get('auto_ctags')
+    return call('gentags#ctags', a:000)
+  endif
+endfunction " }}}
+
+function! gentags#auto_settags() abort " {{{
+  if s:get('auto_settags')
+    call gentags#settags()
+  endif
+endfunction " }}}
 function! gentags#test() abort " {{{
   return s:get_path()
 endfunction " }}}

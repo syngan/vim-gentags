@@ -46,7 +46,7 @@ which contain the following items.
 		if non zero value, |gentags| will generate tags on file
 		saving.
 	"auto_settags"		Default: 1
-		if non zero value, |gentags| sets "tags" when file reading.
+		if non zero value, |gentags| sets 'tags' when file reading.
 
 Example: >
 	let g:gentags#config = {

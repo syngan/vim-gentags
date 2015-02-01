@@ -12,7 +12,6 @@ let s:defval.ctags = 'ctags'
 let s:defval.dirs = ['.git']
 let s:defval.cmdopt = '-R --sort=yes --tag-relative'
 let s:defval.filetype = 0
-let s:defval.ifexist = 0
 " }}}
 
 function! s:get(name) abort " {{{
@@ -30,17 +29,8 @@ endfunction " }}}
 
 function! s:get_path() abort " {{{
   " search `tags` file or '.git' dir upwards.
-  let fdir = expand('%:p:h')
-
-  let df = findfile(s:get('tags'), fdir . ';')
-  if df !=# ''
-    let df = fnamemodify(df, ':p:h')
-  endif
-  if s:get('ifexist')
-    return df
-  endif
-
   let dd = ''
+  let fdir = expand('%:p:h')
   for dir in s:get('dirs')
     let dd = finddir(dir, fdir . ';')
     if dd !=# ''
@@ -49,6 +39,10 @@ function! s:get_path() abort " {{{
     endif
   endfor
 
+  let df = findfile(s:get('tags'), fdir . ';')
+  if df !=# ''
+    let df = fnamemodify(df, ':p:h')
+  endif
 
   if dd ==# '' && df ==# ''
     return fdir

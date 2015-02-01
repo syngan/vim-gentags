@@ -38,9 +38,6 @@ which contain the following items.
 		the tags file name
 	"dirs"			Default: [".git"]
 		the default generate directories list.
-	"ifexist"		Default: 0
-		if non zero value, |gentags| creates the tags file only if it
-		exists.  "dirs" is ignored.
 	"cmdopt"		Default: "-R --sort=yes --tag-relative"
 		command option
 	"filetype"		Default: 0

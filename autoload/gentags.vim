@@ -34,7 +34,7 @@ function! s:get_path() abort " {{{
   for dir in s:get('dirs')
     let dd = finddir(dir, fdir . ';')
     if dd !=# ''
-      let dd = fnamemodify(dd, ':p:h')
+      let dd = fnamemodify(dd, ':p:h:h')
       break
     endif
   endfor

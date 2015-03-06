@@ -20,8 +20,8 @@ function! s:get(name) abort " {{{
   endif
   if has_key(g:gentags#config, &filetype) && has_key(g:gentags#config[&filetype], a:name)
     return g:gentags#config[&filetype][a:name]
-  elseif has_key(g:gentags#config, '_')
-    return get(g:gentags#config['_'], a:name, s:defval[a:name])
+  elseif has_key(g:gentags#config, '-')
+    return get(g:gentags#config['-'], a:name, s:defval[a:name])
   else
     return s:defval[a:name]
   endif

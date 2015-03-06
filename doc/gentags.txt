@@ -28,7 +28,7 @@ VARIABLES						*gentags-variables*
 							*g:gentags#config*
 
 You can define the settings by |g:gentags#config|.  |g:gentags#config| is a
-|Dictionary| whose key is 'filetype'.  The special filetype '_' gives default
+|Dictionary| whose key is 'filetype'.  The special filetype '-' gives default
 values for all filetype.  The values of |g:gentags#config| are Dictionaries
 which contain the following items.
 

@@ -9,7 +9,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 "-nargs=*    Any number of arguments are allowed (0, 1, or many),
-command! -nargs=*
+command! -nargs=* -complete=dir
 \ GenTags call gentags#ctags(<f-args>)
 
 augroup augrp__gentags

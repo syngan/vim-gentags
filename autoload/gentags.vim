@@ -94,7 +94,7 @@ endfunction " }}}
 
 function! gentags#ctags(...) abort " {{{
   let dir = a:0 == 0 ? s:get_path() : a:1
-  if dir == ''
+  if dir ==# ''
     echoerr s:throwmsg('tags path not found' . a:0)
     return
   endif
@@ -104,9 +104,9 @@ function! gentags#ctags(...) abort " {{{
   try
     execute printf('lcd %s', dir)
     if !s:get('quiet')
-      echo s:throwmsg(printf('do `%s` at `%s`', cmd, dir))
+      echo s:throwmsg(printf('do `%s` at `%s`', cmd, getcwd()))
     endif
-    call s:system(cmd, s:cmdopt(dir))
+    call s:system(cmd, s:cmdopt('.'))
   finally
     execute printf('lcd %s', save_dir)
   endtry

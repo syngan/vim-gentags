@@ -59,7 +59,7 @@ Example: >
 COMMANDS						*gentags-commands*
 
 								*:GenTags*
-:GenTags
+:GenTags [{dir}]
 	generate tags file.
 
 ------------------------------------------------------------------------------

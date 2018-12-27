@@ -82,10 +82,23 @@ function! s:has_vimproc() abort " {{{
   return s:exists_vimproc
 endfunction " }}}
 
+function! s:get_last_status() abort " {{{
+  if s:has_vimproc()
+    return vimproc#get_last_status()
+  else
+    return v:shell_error
+  endif
+endfunction " }}}
+
 function! s:system(cmd, opt) abort " {{{
-  let system = s:has_vimproc() ? 'vimproc#system_bg' : 'system'
+  let system = s:has_vimproc() ? 'vimproc#system' : 'system'
   let args = [a:cmd . a:opt]
-  return call(system, args)
+  let str = call(system, args)
+  if s:get_last_status()
+    echoerr s:throwmsg(str)
+    return 0
+  endif
+  return str
 endfunction " }}}
 
 function! s:throwmsg(msg) abort " {{{
@@ -104,7 +117,7 @@ function! gentags#ctags(...) abort " {{{
   try
     execute printf('lcd %s', dir)
     if !s:get('quiet')
-      echo s:throwmsg(printf('do `%s` at `%s`', cmd, getcwd()))
+      echo s:throwmsg(printf('do `%s %s` at `%s`', cmd, s:cmdopt('.'), getcwd()))
     endif
     call s:system(cmd, s:cmdopt('.'))
   finally
